@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class ="card">
+
+    <div class="card-header">
+
+        <h4>Giriş</h4>
+
+
+    </div>
+
+<div class="card-body">
+
+    <form action ="" method="POST">
+
+        {% csrf_token %}
+
+        <div class ="form-group">
+
+            <label for="Mail adresi">Mail Adresiniz</label>
+            <input type="text" name="username" class="form-control">
+        </div>
+
+        <div class ="form-group">
+
+            <label for="Şifre">Şifre</label>
+            <input type="text" name="password" class="form-control">
+
+        </div>
+        <div class ="d-grid">
+
+
+
+
+<br />
+
+<h8> *Kullanıcı adı ve şifreniz yoksa lütfen Olcayto Metin KORCAN'la iletişime geçiniz. </h8>
+
+<br />
+        <button class ="btn btn-success">
+            Giriş </button>
+
+        </div>
+    </form>
+
+
+</div>
+</div>
+
+{% endblock %}

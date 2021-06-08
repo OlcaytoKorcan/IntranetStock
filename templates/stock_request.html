@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class ="card">
+
+    <div class="card-header">
+
+        <h4>Stok Kodu Talebi</h4>
+
+
+    </div>
+
+<div class="card-body">
+
+    <form action ="" method="POST">
+
+        {% csrf_token %}
+
+        <div class ="mb-3">
+
+            <label for="Mail adresi">Stok Tanımı</label>
+            <input type="text" name="Stockname" class="form-control">
+        </div>
+
+
+
+        <div class ="mb-3">
+
+            <label for="mb-3">*Teknik Resim Numarası</label>
+            <input type="text" name="Tnumber" class="form-control">
+        </div>
+
+
+        <div class ="mb-3">
+                <label for="mb-3">Malzeme Grubu Seçiniz </label>
+
+            <select class="form-select" aria-label="Default select example">
+            <option selected>Arge</option>
+
+
+                {% for Malzeme in MalzemeGruplari%}
+
+                <option value="1">{{Malzeme}}</option>
+
+            {% endfor %}
+            </select>
+        </div>
+
+
+
+
+        <label for="mb-3">Proje Seçiniz </label>
+
+            <select class="form-select" aria-label="Default select example">
+            <option selected>Genel</option>
+
+
+                {% for Proje in Projeler%}
+
+                <option value="1">{{Proje}}</option>
+
+            {% endfor %}
+            </select> </form>
+        </div>
+
+
+
+        </div>
+            
+    <div class ="mb-3"> </div>
+        <button class ="btn btn-success">Talebi gönder</button>
+
+    </form>
+
+</div> </div>
+
+{% endblock %}
