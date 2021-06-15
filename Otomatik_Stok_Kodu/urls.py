@@ -18,6 +18,10 @@ from django.urls import path, include
 from stok.views import UserViewSet, GroupViewSet
 from stok.views import *
 from rest_framework import routers
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from stok.views import approve_stok
+from django.conf.urls import url, include
+""" REST API """
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -32,6 +36,11 @@ urlpatterns = [
     path('stockrequest/',StockRequestView),
     path(r'', include("river_admin.urls")),
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^', include ("river_admin.urls")),
+
+    
+    url(r'^approve_stok/(?P<stok_id>\d+)/(?P<next_state_id>\d+)/$', approve_stok, name='approve_stok'),
 
 ]
+

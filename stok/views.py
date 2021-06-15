@@ -1,14 +1,24 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from .models import MalzemeGruplari, Projeler
+from stok.models import MalzemeGruplari, Projeler, Stok
+from django.urls import reverse
+from django.http.response import HttpResponse
+from river.models import State
 
 
-@login_required(login_url='/login') # Giriş yapıldıysa gösterme decoratörü 1-) Detaylandırılacak
-def HomePageView(request):
-    return render(request,'home.html')
+def approve_stok(request, stok_id, next_state_id=None):
+    stok = get_object_or_404(Stok, pk=stok_id)
+    next_state = get_object_or_404(State, pk=next_state_id)
+    
+    try:
+        stok.river.Stok_Talebi.approve(as_user=request.user, next_state=next_state)
+        return redirect("http://127.0.0.1:8000/admin/stok/stok")
+    except Exception as e:
+        return HttpResponse(e)
+
 
 def LoginPageView(request): # Giriş yapılmış mı kontrol etmeye yarıyor.
     if request.user.is_authenticated:
@@ -33,18 +43,26 @@ def logoutUser(request):
 	logout(request)
 	return redirect('login')
 
+
+"""INTRANET SITE KODLAR"""
+@login_required(login_url='/login') # Giriş yapıldıysa gösterme decoratörü 1-) Detaylandırılacak
+def HomePageView(request):
+    return render(request,'home.html')
+
+
+@login_required(login_url='/login')
 def StockRequestView(request):
     context= {'MalzemeGruplari': MalzemeGruplari}
     context ={'Projeler': Projeler}
     return render(request, "stock_request.html",context)
 
-
+""" """
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
 from stok.serializers import UserSerializer, GroupSerializer
 
-
+"""REST API """
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
@@ -61,3 +79,4 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
+
