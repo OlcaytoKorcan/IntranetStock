@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from numpy import logical_not
 from stok.models import MalzemeGruplari, Projeler, Stok
 from django.urls import reverse
 from django.http.response import HttpResponse
@@ -55,6 +56,21 @@ def StockRequestView(request):
     context= {'MalzemeGruplari': MalzemeGruplari}
     context ={'Projeler': Projeler}
     return render(request, "stock_request.html",context)
+
+
+@login_required(login_url='/login') # TBD
+def StockListView(request):
+    context = {'Stok' : Stok)
+    return render(request,"stock_list.html", context)
+
+@login_required(login_url='/login')
+def StockUpdateView(request):
+    pass
+
+
+@login_required(login_url='/login') ## TBD
+def StockApprovalView(request):
+    pass
 
 """ """
 from django.contrib.auth.models import User, Group

@@ -34,6 +34,8 @@ urlpatterns = [
     path('login/',LoginPageView),
     path('logout/',logoutUser, name="logout"),
     path('stockrequest/',StockRequestView),
+    path('stocklist/',StockListView),
+    path('stockapprovelist',StockApprovalView),
     path(r'', include("river_admin.urls")),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
