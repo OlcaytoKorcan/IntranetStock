@@ -20,8 +20,6 @@ def create_river_button(obj, transition_approval):
     """
 
 
-
-
 class StockAdmin(admin.ModelAdmin):
     list_display = ['stockname','no','birim','materialtype',"Onay"]
 
@@ -36,7 +34,6 @@ class StockAdmin(admin.ModelAdmin):
             content = content+ create_river_button(obj, transition_approval)
 
         return mark_safe(content)
-
 
 
 admin.site.register(Stok, StockAdmin)
